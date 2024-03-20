@@ -24,9 +24,6 @@ pub contract CryptoPoops: NonFungibleToken {
   }
 
   pub resource interface CollectionPublic {
-        pub fun deposit(token: @NonFungibleToken.NFT)
-        pub fun getIDs(): [UInt64]
-        pub fun borrowNFT(id: UInt64): &NonFungibleToken.NFT
         pub fun borrowAuthNFT(id: UInt64): &NFT
     }
 
@@ -55,13 +52,9 @@ pub contract CryptoPoops: NonFungibleToken {
     }
 
 
-    // BorrowAuthNFT function (returns a reference to a CryptoPoops nft)
     pub fun borrowAuthNFT(id: UInt64): &NFT {
-        // create a reference to the NFT under the NonFungibleToken standard
-        // use the auth keyword to modify the reference
         let ref = (&self.ownedNFTs[id] as auth &NonFungibleToken.NFT?) ?? panic("The NFT specified doesn't exist")
 
-        // return a reference to the NFT by downcasting it to CryptoPoops using as!
         return ref as! &NFT
     }
 
